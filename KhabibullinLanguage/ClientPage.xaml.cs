@@ -32,6 +32,8 @@ namespace KhabibullinLanguage
 
             ClientListView.ItemsSource = currentClients;
 
+            SortComboBox.SelectedIndex = 0;
+
             UpdateProducts();
         }
         public void UpdateProducts()
@@ -61,57 +63,85 @@ namespace KhabibullinLanguage
 
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SortComboBox.SelectedIndex == 0)
-            {
-                var currentAgents = KhabibullinLanguageEntities.getInstance().Client.ToList();
-                List<Client> clList = new List<Client>();
-                for(int i = 0; i < 10; i++)
-                    currentAgents = clList.Add(KhabibullinLanguageEntities.getInstance().Client.)
-                ClientListView.ItemsSource = currentAgents;
-            }
-            if (SortComboBox.SelectedIndex == 1)
-            {
-                var currentAgents = KhabibullinLanguageEntities.getInstance().Client.ToList();
-            }
-            if (SortComboBox.SelectedIndex == 2)
-            {
-
-            }
+            UpdateProducts();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var currentClients = (sender as Button).DataContext as Client;
-            
-            if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            var currentClient = (sender as Button).DataContext as Client;
+
+            if (currentClient.VisitCount != 0)
             {
-                try
-                {
-                    KhabibullinLanguageEntities.getInstance().Client.Remove(currentClients);
-                    KhabibullinLanguageEntities.getInstance().SaveChanges();
-
-                    ClientListView.ItemsSource = KhabibullinLanguageEntities.getInstance().Client.ToList();
-
-                    UpdateProducts();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                }
-            }
-        }
-        public void ChangePage(int direction, int? selectedPage)
-        {
-            CurrentClientList.Clear();
-            CountRecords = TableList.Count;
-
-            if (CountRecords % 10 > 0)
-            {
-                CountPage = CountRecords / 10 + 1;
+                MessageBox.Show("Внимание удаление невозможно, так как у этого пользователя есть записи посещения!");
             }
             else
             {
-                CountPage = CountRecords / 10;
+                if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        KhabibullinLanguageEntities.getInstance().Client.Remove(currentClient);
+                        KhabibullinLanguageEntities.getInstance().SaveChanges();
+
+                        ClientListView.ItemsSource = KhabibullinLanguageEntities.getInstance().Client.ToList();
+
+                        UpdateProducts();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
+
+        }
+        public void ChangePage(int direction, int? selectedPage)
+        {
+            int currentRecordsOnPage = 10;
+
+            CurrentClientList.Clear();
+            CountRecords = TableList.Count;
+
+            if (SortComboBox.SelectedIndex == 0)
+            {
+                currentRecordsOnPage = 10;
+                if (CountRecords % currentRecordsOnPage > 0)
+                {
+                    CountPage = CountRecords / currentRecordsOnPage + 1;
+                }
+                else
+                {
+                    CountPage = CountRecords / currentRecordsOnPage;
+                }
+            }
+            if (SortComboBox.SelectedIndex == 1)
+            {
+                currentRecordsOnPage = 50;
+                if (CountRecords % currentRecordsOnPage > 0)
+                {
+                    CountPage = CountRecords / currentRecordsOnPage + 1;
+                }
+                else
+                {
+                    CountPage = CountRecords / currentRecordsOnPage;
+                }
+            }
+            if (SortComboBox.SelectedIndex == 2)
+            {
+                currentRecordsOnPage = 200;
+                if (CountRecords % currentRecordsOnPage > 0)
+                {
+                    CountPage = CountRecords / currentRecordsOnPage + 1;
+                }
+                else
+                {
+                    CountPage = CountRecords / currentRecordsOnPage;
+                }
+            }
+            if (SortComboBox.SelectedIndex == 3)
+            {
+                currentRecordsOnPage = KhabibullinLanguageEntities.getInstance().Client.Select(p => p.ID).Count();
+                CountPage = 1;
             }
             Boolean Ifupdate = true;
 
@@ -122,9 +152,9 @@ namespace KhabibullinLanguage
                 if (selectedPage >= 0 && selectedPage <= CountPage)
                 {
                     CurrentPage = (int)selectedPage;
-                    min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                    min = CurrentPage * currentRecordsOnPage + currentRecordsOnPage < CountRecords ? CurrentPage * currentRecordsOnPage + currentRecordsOnPage : CountRecords;
 
-                    for (int i = CurrentPage * 10; i < min; i++)
+                    for (int i = CurrentPage * currentRecordsOnPage; i < min; i++)
                     {
                         CurrentClientList.Add(TableList[i]);
                     }
@@ -138,8 +168,8 @@ namespace KhabibullinLanguage
                         if (CurrentPage > 0)
                         {
                             CurrentPage--;
-                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
-                            for (int i = CurrentPage * 10; i < min; i++)
+                            min = CurrentPage * currentRecordsOnPage + currentRecordsOnPage < CountRecords ? CurrentPage * currentRecordsOnPage + currentRecordsOnPage : CountRecords;
+                            for (int i = CurrentPage * currentRecordsOnPage; i < min; i++)
                             {
                                 CurrentClientList.Add(TableList[i]);
                             }
@@ -154,8 +184,8 @@ namespace KhabibullinLanguage
                         if (CurrentPage < CountPage - 1)
                         {
                             CurrentPage++;
-                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
-                            for (int i = CurrentPage * 10; i < min; i++)
+                            min = CurrentPage * currentRecordsOnPage + currentRecordsOnPage < CountRecords ? CurrentPage * currentRecordsOnPage + currentRecordsOnPage : CountRecords;
+                            for (int i = CurrentPage * currentRecordsOnPage; i < min; i++)
                             {
                                 CurrentClientList.Add(TableList[i]);
                             }
@@ -177,7 +207,7 @@ namespace KhabibullinLanguage
                 }
                 PageListBox.SelectedIndex = CurrentPage;
 
-                min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                min = CurrentPage * currentRecordsOnPage + currentRecordsOnPage < CountRecords ? CurrentPage * currentRecordsOnPage + currentRecordsOnPage : CountRecords;
                 TBCount.Text = min.ToString();
                 TBAllRecords.Text = $" из {CountRecords.ToString()}";
 

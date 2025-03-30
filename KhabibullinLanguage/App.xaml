@@ -13,8 +13,5 @@
             <Setter Property="FontSize" Value="20">
             </Setter>
         </Style>
-        <Style TargetType="local:ClientPage">
-            <Setter Property="Background" Value="#FFE7FABF"></Setter>
-        </Style>
     </Application.Resources>
 </Application>

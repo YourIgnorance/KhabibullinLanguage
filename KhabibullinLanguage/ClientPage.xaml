@@ -18,34 +18,36 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Image Source="\Res\school_logo.png" Width="200" Height="200"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
+        <WrapPanel Orientation="Horizontal" Grid.ColumnSpan="2" Background="#FFE7FABF">
+            <Image Source="\Res\school_logo.png" Width="200" Height="200"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
+        </WrapPanel>
         <TextBlock Text="Khabibullin Language" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"></TextBlock>
-        <!--<TextBlock Name="TBCount" Text="123" FontSize="20" Height="30" Grid.Column="2" Grid.Row="2" ></TextBlock>
-        <TextBlock Name="TBAllRecords" FontSize="20" Height="30"></TextBlock>-->
+        
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+            <TextBlock Text="Выводить по " FontSize="20" Height="30" HorizontalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1">
+                <ComboBox Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged"  FontSize="25" Width="200" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center">
+                    <TextBlock>10</TextBlock>
+                    <TextBlock>50</TextBlock>
+                    <TextBlock>200</TextBlock>
+                    <TextBlock>Все</TextBlock>
+                </ComboBox>
+            </StackPanel>
             <Button Name="LeftDirButton" Content="&lt;" Width="30" Height="30" Click="LeftDirButton_Click"></Button>
-            <ListBox FontSize="20" Name="PageListBox" MouseUp="PageListBox_MouseUp">
+            <ListBox FontSize="30" Name="PageListBox" MouseUp="PageListBox_MouseUp">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
+                        <WrapPanel Orientation="Horizontal" Width="auto"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
             <Button Name="RightDirButton" Content="&gt;" Width="30" Height="30" Click="RightDirButton_Click"></Button>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2">
             <TextBlock Name="TBCount" FontSize="20" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"></TextBlock>
             <TextBlock Name="TBAllRecords" FontSize="20" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
-            <TextBlock Text="Выводить по " FontSize="20" Height="30" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1">
-            <ComboBox Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged"  FontSize="15" Width="200" Grid.Row="2" Grid.Column="1">
-                <TextBlock> 10</TextBlock>
-                <TextBlock> 50</TextBlock>
-                <TextBlock> 200</TextBlock>
-                <TextBlock> Все</TextBlock>
-            </ComboBox>
-        </StackPanel>
+        
         <ListView Name="ClientListView" Grid.Row="1" Grid.ColumnSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
