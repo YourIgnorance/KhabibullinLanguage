@@ -40,6 +40,37 @@ namespace KhabibullinLanguage
         {
             var currentAgents = KhabibullinLanguageEntities.getInstance().Client.ToList();
 
+            if (SortComboBox1.SelectedIndex == 0)
+            {
+                currentAgents = currentAgents.OrderBy(p => p.ID).ToList();
+            }
+            if (SortComboBox1.SelectedIndex == 1)
+            {
+                currentAgents = currentAgents.OrderBy(p => p.LastName).ToList();
+            }
+            if (SortComboBox1.SelectedIndex == 2)
+            {
+                currentAgents = currentAgents.OrderByDescending(p => p.StartDateTime).ToList(); 
+            }
+            if (SortComboBox1.SelectedIndex == 3)
+            {
+                currentAgents = currentAgents.OrderByDescending(p => p.VisitCount).ToList();
+            }
+
+            if (FiltrComboBox.SelectedIndex == 0)
+            {
+                currentAgents = currentAgents.ToList();
+            }
+            if (FiltrComboBox.SelectedIndex == 1)
+            {
+                currentAgents = currentAgents.Where(p => Convert.ToString(p.GenderName) == "женский").ToList();
+            }
+            if (FiltrComboBox.SelectedIndex == 2)
+            {
+                currentAgents = currentAgents.Where(p => Convert.ToString(p.GenderName) == "мужской").ToList();
+            }
+            
+            currentAgents = currentAgents.Where(p => p.FIO.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
             ClientListView.ItemsSource = currentAgents;
            
             TableList = currentAgents;
@@ -62,6 +93,21 @@ namespace KhabibullinLanguage
         }
 
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateProducts();
+        }
+
+        private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateProducts();
+        }
+
+        private void FiltrComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateProducts();
+        }
+
+        private void SortComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateProducts();
         }

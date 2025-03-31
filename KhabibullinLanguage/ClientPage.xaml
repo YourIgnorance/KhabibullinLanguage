@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
@@ -22,11 +23,36 @@
             <Image Source="\Res\school_logo.png" Width="200" Height="200"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
         </WrapPanel>
         <TextBlock Text="Khabibullin Language" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"></TextBlock>
-        
+
+        <WrapPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="700">
+                <TextBlock Text="Поиск:" Width="100" FontSize="20"></TextBlock>
+                <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="550" FontSize="15" Height="30"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Width="300">
+                <TextBlock Text="Пол:" TextAlignment="Center" Width="55" FontSize="20"></TextBlock>
+                <ComboBox Name="FiltrComboBox" SelectionChanged="FiltrComboBox_SelectionChanged"  FontSize="15" Width="200" Height="30">
+                    <TextBlock>Все</TextBlock>
+                    <TextBlock>женский</TextBlock>
+                    <TextBlock>мужской</TextBlock>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Сортировка:" FontSize="20" Width="120"></TextBlock>
+                <ComboBox Name="SortComboBox1" SelectionChanged="SortComboBox1_SelectionChanged" Width="450" Height="30"  FontSize="15">
+                    <TextBlock> нет</TextBlock>
+                    <TextBlock> по фамилии от А до Я</TextBlock>
+                    <TextBlock> по дате последнего посещения</TextBlock>
+                    <TextBlock> по количеству посещений</TextBlock>
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
             <TextBlock Text="Выводить по " FontSize="20" Height="30" HorizontalAlignment="Center"></TextBlock>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1">
-                <ComboBox Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged"  FontSize="25" Width="200" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1">
+                <ComboBox Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged"  FontSize="25" Width="200" Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Center">
                     <TextBlock>10</TextBlock>
                     <TextBlock>50</TextBlock>
                     <TextBlock>200</TextBlock>
@@ -43,12 +69,12 @@
             </ListBox>
             <Button Name="RightDirButton" Content="&gt;" Width="30" Height="30" Click="RightDirButton_Click"></Button>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2">
-            <TextBlock Name="TBCount" FontSize="20" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"></TextBlock>
-            <TextBlock Name="TBAllRecords" FontSize="20" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"></TextBlock>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2">
+            <TextBlock Name="TBCount" FontSize="20" Grid.Column="0" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Name="TBAllRecords" FontSize="20" Grid.Column="0" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
         
-        <ListView Name="ClientListView" Grid.Row="1" Grid.ColumnSpan="2">
+        <ListView Name="ClientListView" Grid.Row="2" Grid.ColumnSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -94,7 +120,7 @@
                         </StackPanel>
                         <TextBlock Text="{Binding RegistrationDateString, StringFormat= Дата регистрации: {0}}" Grid.Column="1" Grid.Row="3" FontSize="24"></TextBlock>
                         <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="4">
-                            <TextBlock Text="{Binding StartTimeDate, StringFormat= Дата последнего посещения: {0}}" FontSize="24"></TextBlock>
+                            <TextBlock Text="{Binding LastDateTime, StringFormat= Дата последнего посещения: {0}}" FontSize="24"></TextBlock>
                             <TextBlock Text="   " FontSize="24"></TextBlock>
                             <TextBlock Text="{Binding VisitCount, StringFormat= Кол-во посещений: {0}}" FontSize="24"></TextBlock>
                         </StackPanel>

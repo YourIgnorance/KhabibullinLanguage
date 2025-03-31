@@ -87,11 +87,18 @@ namespace KhabibullinLanguage
                 return Gender.Name;
             }
         }
-        public string StartTimeDate
+        public string LastDateTime
         {
             get
             {
                 return ClientService.Where(p => p.ClientID == ID).Select(p => p.StartTime.ToShortDateString()).FirstOrDefault() ?? "нет";
+            }
+        }
+        public DateTime StartDateTime
+        {
+            get
+            {
+                return ClientService.Where(p => p.ClientID == ID).Select(p => p.StartTime).FirstOrDefault();
             }
         }
         public int VisitCount
