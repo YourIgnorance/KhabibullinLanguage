@@ -6,75 +6,90 @@
       xmlns:local="clr-namespace:KhabibullinLanguage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddEditPage">
+      Title="AddEditPage" FontFamily="Comic Sans MS">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1000"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
-            <TextBlock Text="Фамилия" FontSize="16" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
-            <TextBox Text="{Binding LastName}" FontSize="15" Height="20" Width="400"></TextBox>
-        </StackPanel>
+        <WrapPanel Orientation="Horizontal" Grid.ColumnSpan="2" Background="#FFE7FABF">
+            <Image Source="\Res\school_logo.png" Width="200" Height="200"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
+        </WrapPanel>
+        <TextBlock Text="Khabibullin Language" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"></TextBlock>
+
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="Имя" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
-            <TextBox Text="{Binding FirstName}" FontSize="15" Height="20" Width="400"></TextBox>
+            <TextBlock Text="ID" Name="IDText" FontSize="16" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Text="{Binding ID}" FontSize="15" Height="30" Width="300" Name="IDTB"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text="Отчество" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
-            <TextBox Text="{Binding Patronymic}" FontSize="15" Height="20" Width="400"></TextBox>
+            <TextBlock Text="Фамилия" FontSize="16" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Text="{Binding LastName}" FontSize="15" Height="30" Width="300"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
+            <TextBlock Text="Имя" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Text="{Binding FirstName}" FontSize="15" Height="30" Width="300"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal">
+            <TextBlock Text="Отчество" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Text="{Binding Patronymic}" FontSize="15" Height="30" Width="300"></TextBox>
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Vertical" Grid.RowSpan="4">
-            <TextBlock Text="Фото клиента" FontSize="15" Height="20" Width="auto" Margin="5"></TextBlock>
-            <Image Name="LogoImage" Stretch="UniformToFill" MinHeight="50" Height="100" Width="100" HorizontalAlignment="Center" Margin="5">
-                <Image.Source>
-                    <Binding Path="ClientPhotoPath" TargetNullValue="\Clients\1.jpg"></Binding>
-                </Image.Source>
-            </Image>
-            <Button Content="Изменить фото" Name="ChangePictureBtn" Click="ChangePictureBtn_Click"></Button>
+
+        <StackPanel Grid.Column="0" Grid.Row="6" Orientation="Horizontal">
+            <TextBlock Text="Телефон" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Text="{Binding Phone}" FontSize="15" Height="30" Width="300"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="7" Orientation="Horizontal">
+            <TextBlock Text="Дата рождения" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
+            <DatePicker Name="dtPicker" IsTodayHighlighted="True" SelectedDateChanged="dtPicker_SelectedDateChanged"  FontSize="15" Height="30" Width="300"></DatePicker>
         </StackPanel>
 
+        <StackPanel Grid.Column="0" Grid.Row="5" Orientation="Horizontal">
+            <TextBlock Text="e-mail" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Text="{Binding Email}" FontSize="15" Height="30" Width="300"></TextBox>
+        </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Grid.Row="8" Orientation="Horizontal">
+            <TextBlock Text="Дата регистрации" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
+            <TextBox Name="RegistrationDateTB" FontSize="15" Height="30" Width="300"></TextBox>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="9" Orientation="Horizontal">
             <TextBlock Text="Пол" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
-            <ComboBox FontSize="15" Height="25" Width="250" Name="ComboType" Text="{Binding Gender}">
+            <ComboBox FontSize="15" Height="35" Width="300" Name="ComboType">
                 <TextBlock Text="мужской"/>
                 <TextBlock Text="женский"/>
             </ComboBox>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="Телефон" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
-            <TextBox Text="{Binding Phone}" FontSize="15" Height="20" Width="300"></TextBox>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Grid.RowSpan="8" HorizontalAlignment="Left">
+            <TextBlock Text="Фото клиента" FontSize="15" Height="20" Width="auto" Margin="5"></TextBlock>
+            <Image Name="LogoImage" Stretch="UniformToFill" Height="300" Width="300" HorizontalAlignment="Left" Margin="5">
+                <Image.Source>
+                    <Binding Path="ClientPhotoPath" TargetNullValue="\Clients\1.jpg"></Binding>
+                </Image.Source>
+            </Image>
+            <Button Content="Изменить фото" Name="ChangePictureBtn" Click="ChangePictureBtn_Click" Width="250" Height="35"></Button>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text="Дата рождения" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
-            <DatePicker Name="dtPicker" IsTodayHighlighted="True" SelectedDateChanged="dtPicker_SelectedDateChanged"  FontSize="15" Height="30" Width="300"></DatePicker>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-            <TextBlock Text="e-mail" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
-            <TextBox Text="{Binding Email}" FontSize="15" Height="20" Width="300"></TextBox>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
-            <TextBlock Text="Дата регистрации" FontSize="15" Height="20" Width="130" Margin="5"></TextBlock>
-            <TextBox Text="{Binding RegistrationDate}" Name="RegistrationDateTB"  FontSize="15" Height="20" Width="300"></TextBox>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
-            <Button Content="Сохранить" Name="SaveBtn" Click="SaveBtn_Click"  Margin="5"></Button>
+        
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="11" Orientation="Horizontal" Height="60" Width="300">
+            <Button Content="Сохранить" Name="SaveBtn" Click="SaveBtn_Click"  Margin="5" Height="40" Width="300"></Button>
         </StackPanel>
     </Grid>
 </Page>

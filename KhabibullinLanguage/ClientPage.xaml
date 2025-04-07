@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientPage" FontFamily="Comic Sans MS">
 
-    <Grid>
+    <Grid IsVisibleChanged="Grid_IsVisibleChanged">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
@@ -122,7 +122,7 @@
                         </StackPanel>
                         <TextBlock Text="{Binding RegistrationDateString, StringFormat= Дата регистрации: {0}}" Grid.Column="1" Grid.Row="3" FontSize="24"></TextBlock>
                         <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="4">
-                            <TextBlock Text="{Binding LastDateTime, StringFormat= Дата последнего посещения: {0}}" FontSize="24"></TextBlock>
+                            <TextBlock Text="{Binding LastDateTimeString, StringFormat= Дата последнего посещения: {0}}" FontSize="24"></TextBlock>
                             <TextBlock Text="   " FontSize="24"></TextBlock>
                             <TextBlock Text="{Binding VisitCount, StringFormat= Кол-во посещений: {0}}" FontSize="24"></TextBlock>
                         </StackPanel>

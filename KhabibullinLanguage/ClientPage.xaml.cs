@@ -33,6 +33,8 @@ namespace KhabibullinLanguage
             ClientListView.ItemsSource = currentClients;
 
             SortComboBox.SelectedIndex = 0;
+            SortComboBox1.SelectedIndex = 0;
+            FiltrComboBox.SelectedIndex = 0;
 
             UpdateClients();
         }
@@ -51,7 +53,7 @@ namespace KhabibullinLanguage
             }
             if (SortComboBox1.SelectedIndex == 2)
             {
-                currentAgents = currentAgents.OrderByDescending(p => p.StartDateTime).ToList(); 
+                currentAgents = currentAgents.OrderByDescending(p => p.LastDateTime).ToList(); 
             }
             if (SortComboBox1.SelectedIndex == 3)
             {
@@ -71,7 +73,7 @@ namespace KhabibullinLanguage
                 currentAgents = currentAgents.Where(p => Convert.ToString(p.GenderName) == "мужской").ToList();
             }
             
-            currentAgents = currentAgents.Where(p => p.FIO.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.ToLower().Replace("(", "").Replace(")", "").Replace("+", "").Replace("-", "").Replace(" ", "").Contains(TBoxSearch.Text.ToLower())).ToList();
+            currentAgents = currentAgents.Where(p => p.FIO.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.ToLower().Replace("(", "").Replace(")", "").Replace("+", "").Replace("-", "").Replace(" ", "").Contains(TBoxSearch.Text.ToLower().Replace("(", "").Replace(")", "").Replace("+", "").Replace("-", "").Replace(" ", ""))).ToList();
             ClientListView.ItemsSource = currentAgents;
            
             TableList = currentAgents;
@@ -116,6 +118,16 @@ namespace KhabibullinLanguage
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void Grid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                KhabibullinLanguageEntities.getInstance().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                ClientListView.ItemsSource = KhabibullinLanguageEntities.getInstance().Client.ToList();
+                UpdateClients();
+            }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
