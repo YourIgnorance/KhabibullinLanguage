@@ -71,7 +71,7 @@
             <Button Name="RightDirButton" Content="&gt;" Width="30" Height="30" Click="RightDirButton_Click"></Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2">
-            <TextBlock Name="TBCount" FontSize="20" Grid.Column="0" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Name="TBCount1" FontSize="20" Grid.Column="0" HorizontalAlignment="Center"></TextBlock>
             <TextBlock Name="TBAllRecords" FontSize="20" Grid.Column="0" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
         
@@ -97,7 +97,7 @@
                                 <Binding Path="ClientPhotoPath">
                                     <Binding.TargetNullValue>
                                         <ImageSource>
-                                            \Clients\1.jpg
+                                            \Clients\picture.png
                                         </ImageSource>
                                     </Binding.TargetNullValue>
                                 </Binding>
@@ -115,7 +115,7 @@
                             <TextBlock Text="   " FontSize="24"></TextBlock>
                             <TextBlock Text="{Binding DateBirthString, StringFormat= Дата рождения: {0}}" FontSize="24"></TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="2">
+                        <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="2"> 
                             <TextBlock Text="{Binding Phone, StringFormat= Телефон: {0}}" FontSize="24"></TextBlock>
                             <TextBlock Text="   " FontSize="24"></TextBlock>
                             <TextBlock Text="{Binding Email, StringFormat= e-mail: {0}}" FontSize="24"></TextBlock>

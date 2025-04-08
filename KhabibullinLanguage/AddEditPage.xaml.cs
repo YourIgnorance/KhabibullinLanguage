@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace KhabibullinLanguage
 {
@@ -45,7 +46,7 @@ namespace KhabibullinLanguage
 
         private void ChangePictureBtn_Click(object sender, RoutedEventArgs e)
         {
-            string clientsFolderPath = @"C:\Users\timur\source\repos\KhabibullinLanguage\KhabibullinLanguage\Clients\";
+            string clientsFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Clients");
 
             OpenFileDialog myOpenFileDialog = new OpenFileDialog
             {
@@ -56,9 +57,13 @@ namespace KhabibullinLanguage
 
             if (myOpenFileDialog.ShowDialog() == true)
             {
-                string relativePath = Path.GetFileName(myOpenFileDialog.FileName);
-                _currentClient.PhotoPath = relativePath;
+                // Получаем имя файла и формируем относительный путь
+                string fileName = Path.GetFileName(myOpenFileDialog.FileName);
+                string relativePath = Path.Combine("Clients", fileName); // Относительный путь
 
+                _currentClient.PhotoPath = fileName;
+
+                // Устанавливаем изображение
                 LogoImage.Source = new BitmapImage(new Uri(myOpenFileDialog.FileName));
             }
         }
@@ -67,6 +72,11 @@ namespace KhabibullinLanguage
             string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{2,}\.[a-zA-Z]{2,}$";
             return Regex.IsMatch(_currentClient.Email, pattern);
         }
+        private bool IsValidName(string name)
+        {
+            string pattern = @"^[А-Яа-яЁё\s\-]+$";
+            return Regex.IsMatch(name, pattern);
+        }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -74,13 +84,31 @@ namespace KhabibullinLanguage
 
             if (string.IsNullOrWhiteSpace(_currentClient.LastName))
                 errors.AppendLine("Укажите фамилию клиента");
-
+            else
+            {
+                if (_currentClient.LastName.Length > 50)
+                    errors.AppendLine("В поле фамилия должено быть меньше 50 символов");
+                if (!IsValidName(_currentClient.LastName))
+                    errors.AppendLine("Поле фамилия указан некоректно (некоректный ввод данных)");
+            }
             if (string.IsNullOrWhiteSpace(_currentClient.FirstName))
                 errors.AppendLine("Укажите имя клиента");
-
+            else
+            {
+                if (_currentClient.FirstName.Length > 50)
+                    errors.AppendLine("В поле имя должено быть меньше 50 символов");
+                if (!IsValidName(_currentClient.FirstName))
+                    errors.AppendLine("Поле имя указан некоректно (некоректный ввод данных)");
+            }
             if (string.IsNullOrWhiteSpace(_currentClient.Patronymic))
                 errors.AppendLine("Укажите отчество клиента");
-
+            else
+            {
+                if (_currentClient.Patronymic.Length > 50)
+                    errors.AppendLine("В поле отчество должено быть меньше 50 символов");
+                if (!IsValidName(_currentClient.Patronymic))
+                    errors.AppendLine("Поле отчество указан некоректно (некоректный ввод данных)");
+            }
             if (ComboType.SelectedIndex == -1)
                 errors.AppendLine("Укажите пол клиента");
 
@@ -89,9 +117,14 @@ namespace KhabibullinLanguage
             else
             {
                 string ph = _currentClient.Phone.Replace("(", "").Replace(")", "").Replace("-", "").Replace("+", "");
+                string allowedChars = "0123456789+-() ";
 
                 if ((ph[1] == '9' || ph[1] == '4' || ph[1] == '8') && ph.Length != 11 || (ph[1] == '3' && ph.Length != 12))
                     errors.AppendLine("Укажите правильно телефон клиента");
+                if (_currentClient.Phone.Any(c => !allowedChars.Contains(c)))
+                {
+                    errors.AppendLine("Поле телефон указана некоректно (некоректный ввод данных)");
+                }
             }
 
             if (ClientBirthday == null)
@@ -114,8 +147,8 @@ namespace KhabibullinLanguage
 
             if (string.IsNullOrWhiteSpace(_currentClient.RegistrationDate.ToString()))
                 errors.AppendLine("Укажите дату регистрации клиента");
-            if (_currentClient.PhotoPath == null)
-                errors.AppendLine("Укажите фото клиента");
+            //if (_currentClient.PhotoPath == null)
+            //    errors.AppendLine("Укажите фото клиента");
 
             if (errors.Length > 0)
             {

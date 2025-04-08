@@ -281,6 +281,7 @@
     <Resource Include="Res\school_logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Clients\picture.png" />
     <Content Include="KhabibullinLanguageEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>KhabibullinLanguageEntities.Context.cs</LastGenOutput>

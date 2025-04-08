@@ -75,7 +75,7 @@ namespace KhabibullinLanguage
             
             currentAgents = currentAgents.Where(p => p.FIO.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.ToLower().Replace("(", "").Replace(")", "").Replace("+", "").Replace("-", "").Replace(" ", "").Contains(TBoxSearch.Text.ToLower().Replace("(", "").Replace(")", "").Replace("+", "").Replace("-", "").Replace(" ", ""))).ToList();
             ClientListView.ItemsSource = currentAgents;
-           
+            TBCount1.Text = currentAgents.Count().ToString();
             TableList = currentAgents;
             ChangePage(0, 0);
         }
@@ -277,7 +277,7 @@ namespace KhabibullinLanguage
                 PageListBox.SelectedIndex = CurrentPage;
 
                 min = CurrentPage * currentRecordsOnPage + currentRecordsOnPage < CountRecords ? CurrentPage * currentRecordsOnPage + currentRecordsOnPage : CountRecords;
-                TBCount.Text = min.ToString();
+                //TBCount.Text = min.ToString();
                 TBAllRecords.Text = $" из {ALLClientCount.ToString()}";
 
                 ClientListView.ItemsSource = CurrentClientList;
